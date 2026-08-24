@@ -1,82 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Mono, Newsreader, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const newsreader = Newsreader({ variable: "--font-newsreader", subsets: ["latin"] });
+const jakarta = Plus_Jakarta_Sans({ variable: "--font-jakarta", subsets: ["latin"] });
+const dmMono = DM_Mono({ variable: "--font-dm-mono", weight: ["400", "500"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Bookchaowalit - Bookchaowalit",
-  description: "Bookchaowalit by Bookchaowalit - A modern web application built with Next.js",
-  keywords: ['Bookchaowalit', 'Bookchaowalit', 'Next.js', 'React', 'TypeScript'],
-  authors: [{ name: 'Bookchaowalit', url: 'https://bookchaowalit.com' }],
-  creator: 'Bookchaowalit',
-  publisher: 'Bookchaowalit',
-  metadataBase: new URL('https://bookchaowalit.com'),
-  alternates: {
-    canonical: 'https://bookchaowalit.com',
-  },
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://bookchaowalit.com',
-    title: 'Bookchaowalit - Bookchaowalit',
-    description: 'Bookchaowalit by Bookchaowalit - A modern web application built with Next.js',
-    siteName: 'Bookchaowalit',
-    images: [
-      {
-        url: '/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Bookchaowalit',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Bookchaowalit - Bookchaowalit',
-    description: 'Bookchaowalit by Bookchaowalit - A modern web application built with Next.js',
-    images: ['/og-image.png'],
-    creator: '@bookchaowalit',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+  title: "Ranking Desk — bookchaowalit",
+  description: "An honest recommendation-engine interface before the model is connected.",
+  keywords: ["recommendation engine", "bookchaowalit", "ranking interface"],
+  authors: [{ name: "bookchaowalit", url: "https://bookchaowalit.com" }],
+  creator: "bookchaowalit",
+  metadataBase: new URL("https://bookchaowalit.com"),
+  alternates: { canonical: "https://bookchaowalit.com" },
+  openGraph: { type: "website", locale: "en_US", url: "https://bookchaowalit.com", title: "Ranking Desk — bookchaowalit", description: "An honest recommendation-engine interface before the model is connected.", siteName: "Ranking Desk", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Ranking Desk" }] },
+  twitter: { card: "summary_large_image", title: "Ranking Desk — bookchaowalit", description: "An honest recommendation-engine interface before the model is connected.", images: ["/og-image.png"], creator: "@bookchaowalit" },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Analytics />
-        <SpeedInsights />
-        {children}
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="en"><body className={`${newsreader.variable} ${jakarta.variable} ${dmMono.variable}`}>{children}</body></html>;
 }
-
-// SEO TODO: Add Open Graph tags for social sharing
