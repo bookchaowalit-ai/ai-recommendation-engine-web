@@ -24,8 +24,13 @@ export const QUERY_WEIGHT = 4;
 
 export type Recommendation = { project: RelatedProject; category: string; score: number; reasons: string[] };
 
+/**
+ * Accents and full-width forms are folded first (NFKD, marks dropped), so
+ * "Résumé" is one token "resume" instead of the fragments "sum" / "r" that
+ * could match unrelated projects.
+ */
 function tokens(text: string): string[] {
-  return text.toLowerCase().split(/[^a-z0-9]+/).filter((token) => token.length > 1);
+  return text.normalize("NFKD").replace(/\p{M}/gu, "").toLowerCase().split(/[^a-z0-9]+/).filter((token) => token.length > 1);
 }
 
 /**
@@ -53,5 +58,6 @@ export function rank(intent: Intent, query = "", limit = 5, catalog: ProjectCate
       if (score > 0) results.push({ project, category: category.label, score, reasons });
     }
   }
-  return results.sort((a, b) => b.score - a.score || a.project.name.localeCompare(b.project.name)).slice(0, limit);
+  const max = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : results.length;
+  return results.sort((a, b) => b.score - a.score || a.project.name.localeCompare(b.project.name)).slice(0, max);
 }

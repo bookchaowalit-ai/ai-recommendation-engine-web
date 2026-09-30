@@ -23,3 +23,12 @@ Score: 6/10 (was 3/10) — the desk now actually ranks a real catalog with visib
 ## Done in this pass (pass 2)
 
 - Canonical host is config-driven: `lib/site.ts` resolves `NEXT_PUBLIC_SITE_URL` (validated, clear error on a non-http(s) value) and feeds `metadataBase`, generated `app/sitemap.ts` / `app/robots.ts` and the MCP `get_app_info` URL; removed the stale template `public/sitemap.xml` / `robots.txt` (they pointed at `bookchaowalit.com` and a `*.vercel.app` name that differs from the project URL). Tested in `lib/site.test.ts`.
+
+## Done in this pass (pass 3)
+- Edge-case pass on `lib/rank.ts` (regression tests in `lib/rank.test.ts`):
+  - Query tokens split on every non-ASCII letter, so "Résumé" became "sum"
+    and boosted an unrelated "Sum Board", and full-width "ＲＥＧＥＸ" matched
+    nothing. Text is now NFKD-folded with combining marks removed.
+  - `rank(..., limit)` with a negative limit dropped the last result
+    (`slice(0, -1)`) and NaN returned nothing; the limit is now clamped
+    (negative → none, non-finite → no limit).

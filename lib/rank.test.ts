@@ -28,3 +28,22 @@ describe("rank", () => {
     expect(rank("ship")).toHaveLength(5);
   });
 });
+
+describe("rank edge cases", () => {
+  const resume = [
+    { id: "main", label: "Main sites", projects: [{ name: "Resume", url: "https://c.test", slug: "resume" }] },
+    { id: "communication", label: "Communication", projects: [{ name: "Sum Board", url: "https://s.test", slug: "sum-board" }] },
+  ];
+
+  it("folds accents and full-width letters instead of splitting words apart", () => {
+    expect(rank("make", "Résumé", 5, resume).map((r) => r.project.slug)).toEqual(["resume", "sum-board"]);
+    expect(rank("make", "Résumé", 5, resume)[0].score).toBe(QUERY_WEIGHT);
+    expect(rank("learn", "ＲＥＧＥＸ", 5, catalog)[0].project.slug).toBe("regex");
+  });
+
+  it("treats a negative or non-finite limit as none / no limit instead of dropping results", () => {
+    expect(rank("make", "", -1, catalog)).toEqual([]);
+    expect(rank("make", "", Number.POSITIVE_INFINITY, catalog)).toHaveLength(2);
+    expect(rank("make", "", Number.NaN, catalog)).toHaveLength(2);
+  });
+});
