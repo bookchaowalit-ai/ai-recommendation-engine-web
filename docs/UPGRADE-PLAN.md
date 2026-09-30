@@ -32,3 +32,4 @@ Score: 6/10 (was 3/10) — the desk now actually ranks a real catalog with visib
   - `rank(..., limit)` with a negative limit dropped the last result
     (`slice(0, -1)`) and NaN returned nothing; the limit is now clamped
     (negative → none, non-finite → no limit).
+- Security deps: `next` 16.1.6 -> 16.3.8 (and `eslint-config-next`) clears critical GHSA-2xp9-vwfh-vxw4 (Image Optimization RCE) plus bundled postcss/sharp highs; lockfile regenerated with same-major `npm audit fix`. `npm audit --omit=dev`: C1/H3/M1/L0 [nanoid:h,next:c,postcss:h,sharp:h] -> C0/H0/M0/L0.
