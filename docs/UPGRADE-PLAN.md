@@ -1,0 +1,21 @@
+# Upgrade plan
+
+## Current state
+
+Score: 6/10 (was 3/10) — the desk now actually ranks a real catalog with visible reasoning instead of an empty "unwired" docket; rules are hand-tuned.
+
+## Backlog
+
+- P1: Add short descriptions/tags per project so keyword matching is not limited to names.
+- P1: Let the visitor adjust the weights (sliders) and see the ranking change.
+- P2: Add an OG image (the missing `/og-image.png` reference was removed).
+
+## Done in this pass
+
+- CI (`.github/workflows/ci.yml`): `npm ci`, lint, typecheck, vitest, `next build` on every push and PR.
+- `/api/mcp` uses a typed JSON-RPC handler (`lib/mcp.ts`, tested) with proper error codes and an honest `get_app_info` tool; this fixed the template's lint errors.
+- `/more-projects` renders from `lib/related-projects.ts` (was ~980 lines of unrolled links plus an unused data copy) and no longer links to itself; removed the stale `app/page.tsx.backup`.
+- New `lib/rank.ts` (tested): deterministic ranking by intent weight + keyword overlap, tie-break by name, with a per-point explanation for each pick.
+- Page shows the top 5 with links, reasons and scores; intent toggles use `aria-pressed` instead of an incomplete tablist.
+- Metadata: removed the canonical pointing at the portfolio root and the non-existent `/og-image.png`.
+- `DESIGN.md` first-viewport section updated to describe the rule-based desk.

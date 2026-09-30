@@ -10,9 +10,9 @@ catalog is connected.
 ## First viewport
 
 The first viewport asks what kind of next step the visitor is exploring, then
-shows the ranking desk in an explicitly unwired state. The product's honesty is
-part of the interface: the empty docket explains the missing model, catalog,
-and rationale rather than shipping fake recommendations.
+ranks the local project catalog with editorial rules. The product's honesty is
+part of the interface: every pick carries its score and the reasons behind each
+point, and the copy states plainly that no machine-learning model is involved.
 
 ## Palette and material
 
