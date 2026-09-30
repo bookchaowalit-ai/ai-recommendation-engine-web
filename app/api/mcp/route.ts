@@ -1,11 +1,12 @@
 import { handleRpc } from "@/lib/mcp";
+import { SITE_URL } from "@/lib/site";
 
 export const runtime = "edge";
 
 const APP = {
   name: "Recommendation Engine",
   description: "A transparent, rule-based recommender over the Bookchaowalit project catalog.",
-  url: "https://bookchaowalit-recommendation-engine-frontend.vercel.app",
+  url: SITE_URL,
 };
 
 export async function POST(request: Request) {

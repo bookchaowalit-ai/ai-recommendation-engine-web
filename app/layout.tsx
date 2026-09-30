@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import { DM_Mono, Newsreader, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   keywords: ["recommendation engine", "bookchaowalit", "ranking interface"],
   authors: [{ name: "bookchaowalit", url: "https://bookchaowalit.com" }],
   creator: "bookchaowalit",
-  metadataBase: new URL("https://bookchaowalit.com"),
+  metadataBase: new URL(SITE_URL),
   openGraph: { type: "website", locale: "en_US", title: "Ranking Desk — bookchaowalit", description: "A transparent, rule-based recommender for the Bookchaowalit project catalog.", siteName: "Ranking Desk" },
   twitter: { card: "summary", title: "Ranking Desk — bookchaowalit", description: "A transparent, rule-based recommender for the Bookchaowalit project catalog.", creator: "@bookchaowalit" },
 };

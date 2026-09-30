@@ -19,3 +19,7 @@ Score: 6/10 (was 3/10) — the desk now actually ranks a real catalog with visib
 - Page shows the top 5 with links, reasons and scores; intent toggles use `aria-pressed` instead of an incomplete tablist.
 - Metadata: removed the canonical pointing at the portfolio root and the non-existent `/og-image.png`.
 - `DESIGN.md` first-viewport section updated to describe the rule-based desk.
+
+## Done in this pass (pass 2)
+
+- Canonical host is config-driven: `lib/site.ts` resolves `NEXT_PUBLIC_SITE_URL` (validated, clear error on a non-http(s) value) and feeds `metadataBase`, generated `app/sitemap.ts` / `app/robots.ts` and the MCP `get_app_info` URL; removed the stale template `public/sitemap.xml` / `robots.txt` (they pointed at `bookchaowalit.com` and a `*.vercel.app` name that differs from the project URL). Tested in `lib/site.test.ts`.
