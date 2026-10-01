@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE_URL } from "@/lib/site";
 import { DM_Mono, Newsreader, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -8,14 +9,13 @@ const dmMono = DM_Mono({ variable: "--font-dm-mono", weight: ["400", "500"], sub
 
 export const metadata: Metadata = {
   title: "Ranking Desk — bookchaowalit",
-  description: "An honest recommendation-engine interface before the model is connected.",
+  description: "A transparent, rule-based recommender for the Bookchaowalit project catalog.",
   keywords: ["recommendation engine", "bookchaowalit", "ranking interface"],
   authors: [{ name: "bookchaowalit", url: "https://bookchaowalit.com" }],
   creator: "bookchaowalit",
-  metadataBase: new URL("https://bookchaowalit.com"),
-  alternates: { canonical: "https://bookchaowalit.com" },
-  openGraph: { type: "website", locale: "en_US", url: "https://bookchaowalit.com", title: "Ranking Desk — bookchaowalit", description: "An honest recommendation-engine interface before the model is connected.", siteName: "Ranking Desk", images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Ranking Desk" }] },
-  twitter: { card: "summary_large_image", title: "Ranking Desk — bookchaowalit", description: "An honest recommendation-engine interface before the model is connected.", images: ["/og-image.png"], creator: "@bookchaowalit" },
+  metadataBase: new URL(SITE_URL),
+  openGraph: { type: "website", locale: "en_US", title: "Ranking Desk — bookchaowalit", description: "A transparent, rule-based recommender for the Bookchaowalit project catalog.", siteName: "Ranking Desk" },
+  twitter: { card: "summary", title: "Ranking Desk — bookchaowalit", description: "A transparent, rule-based recommender for the Bookchaowalit project catalog.", creator: "@bookchaowalit" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

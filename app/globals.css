@@ -78,3 +78,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--desk-red); outl
   .docket-footer, .ranking-footer { align-items: flex-start; flex-direction: column; padding: 24px 0; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; } }
+.desk-query { display: grid; gap: 8px; margin-top: 26px; }
+.desk-query input { width: 100%; border: 0; border-bottom: 1px solid var(--desk-blue); background: transparent; padding: 8px 0; color: var(--desk-blue); font: 15px var(--font-jakarta), sans-serif; }
+.desk-query input:focus-visible { outline: 2px solid var(--desk-red); outline-offset: 3px; }
+.docket-list b a { color: inherit; text-decoration: underline; text-decoration-color: var(--desk-red); text-underline-offset: 4px; }
