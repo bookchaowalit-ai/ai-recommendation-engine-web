@@ -28,7 +28,7 @@ npm test
 npm run build
 ```
 
-CI runs the same checks on every push (`.github/workflows/ci.yml`).
+CI (`.github/workflows/ci.yml`) runs the same checks on pushes to `main` and on pull requests through the shared `platform-ci-workflows` `ci-node.yml`, plus its `security.yml` scans (Gitleaks, Semgrep, OSV-Scanner, Trivy). Reviewed OSV exceptions live in `osv-scanner.toml`.
 
 ## Configuration
 
