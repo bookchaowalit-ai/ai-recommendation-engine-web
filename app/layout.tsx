@@ -1,23 +1,30 @@
 import type { Metadata } from "next";
+import { Geist } from "next/font/google";
 import { SITE_URL } from "@/lib/site";
-import { DM_Mono, Newsreader, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const newsreader = Newsreader({ variable: "--font-newsreader", subsets: ["latin"] });
-const jakarta = Plus_Jakarta_Sans({ variable: "--font-jakarta", subsets: ["latin"] });
-const dmMono = DM_Mono({ variable: "--font-dm-mono", weight: ["400", "500"], subsets: ["latin"] });
+// The font variable sits on <html>: the App shell tokens live on :root and read it from there.
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+
+const description = "Pick a goal and get Bookchaowalit projects ranked by hand-set rules and your keywords, with every point of every score shown. No machine-learning model.";
 
 export const metadata: Metadata = {
-  title: "Ranking Desk — bookchaowalit",
-  description: "A transparent, rule-based recommender for the Bookchaowalit project catalog.",
-  keywords: ["recommendation engine", "bookchaowalit", "ranking interface"],
-  authors: [{ name: "bookchaowalit", url: "https://bookchaowalit.com" }],
-  creator: "bookchaowalit",
+  title: "Ranking Desk | Bookchaowalit",
+  description,
+  keywords: ["recommendation engine", "rule-based ranking", "bookchaowalit"],
+  authors: [{ name: "Bookchaowalit", url: "https://bookchaowalit.com" }],
+  creator: "Bookchaowalit",
   metadataBase: new URL(SITE_URL),
-  openGraph: { type: "website", locale: "en_US", title: "Ranking Desk — bookchaowalit", description: "A transparent, rule-based recommender for the Bookchaowalit project catalog.", siteName: "Ranking Desk" },
-  twitter: { card: "summary", title: "Ranking Desk — bookchaowalit", description: "A transparent, rule-based recommender for the Bookchaowalit project catalog.", creator: "@bookchaowalit" },
+  alternates: { canonical: "/" },
+  openGraph: { type: "website", locale: "en_US", url: "/", title: "Ranking Desk | Bookchaowalit", description, siteName: "Bookchaowalit" },
+  twitter: { card: "summary", title: "Ranking Desk | Bookchaowalit", description },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={`${newsreader.variable} ${jakarta.variable} ${dmMono.variable}`}>{children}</body></html>;
+  return (
+    <html lang="en" className={geistSans.variable}>
+      <body>{children}</body>
+    </html>
+  );
 }
