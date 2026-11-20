@@ -4,9 +4,7 @@ import { createRoot, type Root } from "react-dom/client";
 import { renderToString } from "react-dom/server";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import Home from "@/app/page";
-import RootLayout, { metadata } from "@/app/layout";
-import robots from "@/app/robots";
-import sitemap from "@/app/sitemap";
+import RootLayout from "@/app/layout";
 
 vi.mock("next/font/google", () => ({ Geist: () => ({ variable: "font-geist" }) }));
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
@@ -79,6 +77,16 @@ describe("Ranking Desk on the App shell", () => {
     spy.mockRestore();
   });
 
+  it("keeps the ranked list a list in Safari/VoiceOver and reads each pick's rank aloud", () => {
+    const list = $("ol.as-list")!;
+    expect(list.getAttribute("role")).toBe("list");
+    const rank = $(".rd-row .rd-rank")!;
+    expect(rank.getAttribute("aria-hidden")).toBeNull();
+    expect(rank.textContent).toBe("Rank 1");
+    expect($(".as-section ul.as-list")?.getAttribute("role")).toBe("list");
+    expect($(".as-section")?.textContent).toContain("name, category or slug");
+  });
+
   it("has a skip link, a footer back to the hub and the real source repo", () => {
     expect($(".as-skip")?.getAttribute("href")).toBe("#main");
     expect($("#main")?.getAttribute("tabindex")).toBe("-1");
@@ -88,11 +96,38 @@ describe("Ranking Desk on the App shell", () => {
   });
 });
 
+/** Import the metadata modules fresh with NEXT_PUBLIC_SITE_URL set (or unset) first. */
+async function freshSiteModules(siteUrl: string | undefined) {
+  vi.resetModules();
+  vi.stubEnv("NEXT_PUBLIC_SITE_URL", siteUrl);
+  const [{ default: Layout, metadata: meta }, { default: freshRobots }, { default: freshSitemap }] = await Promise.all([
+    import("@/app/layout"),
+    import("@/app/robots"),
+    import("@/app/sitemap"),
+  ]);
+  return { Layout, meta, freshRobots, freshSitemap };
+}
+
 describe("layout and metadata", () => {
-  it("uses Geist on <html> and the site's own domain", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it("uses Geist on <html>", () => {
     expect(renderToString(<RootLayout><p>child</p></RootLayout>)).toContain('<html lang="en" class="font-geist">');
-    expect(String(metadata.metadataBase)).toBe("https://recommendation-engine.bookchaowalit.com/");
-    expect(sitemap().map((entry) => entry.url)).toEqual(["https://recommendation-engine.bookchaowalit.com"]);
-    expect(robots().sitemap).toBe("https://recommendation-engine.bookchaowalit.com/sitemap.xml");
+  });
+
+  it("defaults to the site's own domain when NEXT_PUBLIC_SITE_URL is unset", async () => {
+    const { meta, freshRobots, freshSitemap } = await freshSiteModules(undefined);
+    expect(String(meta.metadataBase)).toBe("https://recommendation-engine.bookchaowalit.com/");
+    expect(freshSitemap().map((entry) => entry.url)).toEqual(["https://recommendation-engine.bookchaowalit.com"]);
+    expect(freshRobots().sitemap).toBe("https://recommendation-engine.bookchaowalit.com/sitemap.xml");
+  });
+
+  it("uses NEXT_PUBLIC_SITE_URL for metadata, sitemap and robots when it is set", async () => {
+    const { meta, freshRobots, freshSitemap } = await freshSiteModules("https://example.test/");
+    expect(String(meta.metadataBase)).toBe("https://example.test/");
+    expect(freshSitemap().map((entry) => entry.url)).toEqual(["https://example.test"]);
+    expect(freshRobots().sitemap).toBe("https://example.test/sitemap.xml");
   });
 });

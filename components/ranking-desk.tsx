@@ -52,10 +52,10 @@ export function RankingDesk() {
               <button type="button" className="as-plain" onClick={() => setQuery("")}>clear the keywords</button>
             </div>
           ) : (
-            <ol className="as-list" aria-label={`Picks for ${active.label.toLowerCase()}`}>
+            <ol className="as-list" role="list" aria-label={`Picks for ${active.label.toLowerCase()}`}>
               {results.map((item, index) => (
                 <li key={item.project.slug} className="as-row rd-row">
-                  <span className="rd-rank" aria-hidden="true">{index + 1}</span>
+                  <span className="rd-rank"><span className="as-sr">Rank </span>{index + 1}</span>
                   <div>
                     <h3><a href={item.project.url}>{item.project.name}</a></h3>
                     <p>{detail(item.category, item.reasons)}</p>
@@ -69,7 +69,7 @@ export function RankingDesk() {
 
         <section className="as-section" aria-labelledby="how-title">
           <h2 id="how-title" className="as-section-title">How a score is made</h2>
-          <ul className="as-list">
+          <ul className="as-list" role="list">
             <li className="as-row">
               <div>
                 <h3>Category weight, 0 to 3</h3>
@@ -79,7 +79,7 @@ export function RankingDesk() {
             <li className="as-row">
               <div>
                 <h3>Keywords, +{QUERY_WEIGHT} each</h3>
-                <p>Every keyword found in a project&apos;s name or category adds {QUERY_WEIGHT} points. Ties sort by name.</p>
+                <p>Every distinct keyword found in a project&apos;s name, category or slug adds {QUERY_WEIGHT} points. Ties sort by name.</p>
               </div>
             </li>
           </ul>
