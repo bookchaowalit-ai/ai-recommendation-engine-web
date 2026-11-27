@@ -9,7 +9,7 @@ Last reviewed: 2026-11-28 · commit `3c404eb`
 ```mermaid
 flowchart TD
   DEV["push or PR to main"] --> CI["CI: ci-node (lint, typecheck, test, build) + security scan"]
-  CI -->|green| DEPLOY["deploy to host [ต้องยืนยัน]"]
+  DEV --> DEPLOY["deploy to host: no workflow in repo deploys, path unknown (Vercel Git or CLI) [ต้องยืนยัน]"]
   CAT["lib/related-projects.ts (static catalog, live project URLs)"] --> RANK["rank(intent, query, limit 5)"]
   VISITOR["visitor"] --> PAGE["/ server page"]
   PAGE --> DESK["RankingDesk (client component)"]
